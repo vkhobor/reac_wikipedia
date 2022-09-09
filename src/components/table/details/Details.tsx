@@ -32,7 +32,6 @@ const Details: FunctionComponent<DetailsProps> = (props) => {
         disabled={props.isWikiLoading || props.isWikiError}
         variant="outlined"
         href={props.wikiUrl}
-        target="_blank"
       >
         Wikipedia
       </Button>
