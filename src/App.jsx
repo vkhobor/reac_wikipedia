@@ -1,14 +1,16 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
-import Table from "./Table";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import TableWithData from "./components/table/TableWithData";
+
+// Create a client
+const queryClient = new QueryClient();
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <div className="App">
-      <Table />
+      <QueryClientProvider client={queryClient}>
+        <TableWithData />
+      </QueryClientProvider>
     </div>
   );
 }
