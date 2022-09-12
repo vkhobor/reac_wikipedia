@@ -7,11 +7,11 @@ interface GenreCellProps {
 
 const GenreCell: FunctionComponent<GenreCellProps> = ({ genres }) => {
   return (
-    <>
+    <div className="flex flex-wrap gap-2">
       {genres.map((genre) => (
         <Chip key={genre} label={genre} variant="filled" />
       ))}
-    </>
+    </div>
   );
 };
 

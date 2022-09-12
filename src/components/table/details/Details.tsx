@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Alert, Button, CircularProgress } from "@mui/material";
 import { FunctionComponent } from "react";
 import { createUrlFromIMDBId } from "../../../api/IMDB/createUrlFromIMDBId";
 
@@ -18,32 +18,39 @@ const Details: FunctionComponent<DetailsProps> = (props) => {
   return (
     <>
       {props.isWikiLoading ? (
-        "Loading..."
+        <div className=" h-36 flex justify-center items-center">
+          <CircularProgress />
+        </div>
       ) : props.isWikiError ? (
-        "Could not find Wikipedia page for movie"
+        <Alert severity="error">Could not find movie on wikipedia.org</Alert>
       ) : (
         <>
-          {props.title}
-          {props.summary}
+          <div className="h-36 overflow-hidden">
+            <h5 className="text-xl mb-2">{props.title}</h5>
+            <p className="overflow-hidden text-ellipsis">{props.summary}</p>
+          </div>
         </>
       )}
 
-      <Button
-        disabled={props.isWikiLoading || props.isWikiError}
-        variant="outlined"
-        href={props.wikiUrl}
-      >
-        Wikipedia
-      </Button>
-      <Button variant="outlined" target="_blank" href={imdbUrl}>
-        IMDB
-      </Button>
-      <Button
-        variant="outlined"
-        onClick={() => props.loadRelated(props.IMDBId)}
-      >
-        Related
-      </Button>
+      <div className="flex justify-end gap-2 pt-3">
+        <Button
+          target="_blank"
+          disabled={props.isWikiLoading || props.isWikiError}
+          variant="outlined"
+          href={props.wikiUrl || ""}
+        >
+          Wikipedia
+        </Button>
+        <Button variant="outlined" target="_blank" href={imdbUrl}>
+          IMDB
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => props.loadRelated(props.IMDBId)}
+        >
+          Related
+        </Button>
+      </div>
     </>
   );
 };

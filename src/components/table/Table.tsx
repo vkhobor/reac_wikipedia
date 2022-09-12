@@ -59,14 +59,16 @@ const Table: FunctionComponent<TableProps> = ({
         columns={columns}
         data={data}
         getRowId={(row) => row.id}
-        enableBottomToolbar={false}
-        enableRowActions={false}
         enableColumnActions={false}
-        enableColumnFilters={false}
+        enablePagination={false}
+        enableSorting={false}
+        enableBottomToolbar={false}
+        enableExpandAll={false}
         enableDensityToggle={false}
-        enableFullScreenToggle={false}
-        enableHiding={false}
         enableGlobalFilter={false}
+        enableFullScreenToggle={false}
+        muiTableBodyRowProps={{ hover: false }}
+        renderToolbarInternalActions={({ table }) => <></>}
         renderDetailPanel={({ row }) =>
           renderDetailPanel(row.original, row.getIsExpanded())
         }

@@ -7,10 +7,13 @@ import useSearch from "../../hooks/useSearch";
 import DetailsWithData from "./details/DetailsWithData";
 import Table from "./Table";
 
-interface TableWithDataProps {}
+interface TableWithDataProps {
+  searchFilter: string;
+}
 
-const TableWithData: FunctionComponent<TableWithDataProps> = () => {
-  const { search, searchFilter, setSearchInput } = useSearch<string>("", false);
+const TableWithData: FunctionComponent<TableWithDataProps> = ({
+  searchFilter,
+}) => {
   const [relatedSearchId, setRelatedSearchId] = useState("");
 
   useEffect(() => {
@@ -39,24 +42,21 @@ const TableWithData: FunctionComponent<TableWithDataProps> = () => {
     relatedSearchId === "" ? searchQuery : relatedQuery;
 
   return (
-    <>
-      <SearchForm onInputChange={setSearchInput} onSubmit={search} />
-      <Table
-        data={data}
-        isError={isError}
-        isFetching={isFetching}
-        isLoading={isLoading}
-        renderDetailPanel={(row, isExpanded) => (
-          <DetailsWithData
-            movieTitle={row.name}
-            visible={isExpanded}
-            IMDBid={row.id}
-            loadRelated={loadRelated}
-            IMDBUrl={row.homepage}
-          />
-        )}
-      />
-    </>
+    <Table
+      data={data}
+      isError={isError}
+      isFetching={isFetching}
+      isLoading={isLoading}
+      renderDetailPanel={(row, isExpanded) => (
+        <DetailsWithData
+          movieTitle={row.name}
+          visible={isExpanded}
+          IMDBid={row.id}
+          loadRelated={loadRelated}
+          IMDBUrl={row.homepage}
+        />
+      )}
+    />
   );
 };
 
