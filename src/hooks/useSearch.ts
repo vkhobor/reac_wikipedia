@@ -1,21 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export default function useSearch<T>(
-  defaultSearchFilter: T,
-  triggerOnInput: boolean
-) {
+export default function useSearch<T>(defaultSearchFilter: T) {
   const [searchFilter, setSearchFilter] = useState<T>(defaultSearchFilter);
   const [searchInput, setSearchInput] = useState<T>(defaultSearchFilter);
-
-  useEffect(() => {
-    if (triggerOnInput) {
-      search();
-    }
-  }, [searchInput]);
+  const [refetch, setRefech] = useState<number>(0);
 
   function search() {
-    setSearchFilter(searchInput);
+    setSearchFilter((filter) => {
+      if (filter === searchInput) {
+        setRefech((refetch) => ++refetch);
+        return filter;
+      }
+      return searchInput;
+    });
   }
 
-  return { searchInput, setSearchInput, searchFilter, search };
+  return { searchInput, setSearchInput, searchFilter, search, refetch };
 }

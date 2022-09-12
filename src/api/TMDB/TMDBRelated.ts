@@ -1,11 +1,11 @@
 import { gql } from "graphql-request";
-import { client } from "./IMBDBase";
+import { client } from "./TMBDBase";
 
 const query = gql`
   query getSimilarMovies($id: ID!) {
     movie(id: $id) {
       id
-      similar {
+      recommended {
         id
         name
         score
@@ -31,14 +31,14 @@ export interface Similar {
 
 export interface Movie {
   id: string;
-  similar: Similar[];
+  recommended: Similar[];
 }
 
 export interface Data {
   movie: Movie;
 }
 
-export async function imdbRelated(id: string): Promise<Similar[]> {
+export async function tmdbRelated(id: string): Promise<Similar[]> {
   if (id === "") return [];
 
   const variables = {
@@ -47,5 +47,5 @@ export async function imdbRelated(id: string): Promise<Similar[]> {
 
   const response = await client.request<Data>(query, variables);
 
-  return response.movie.similar;
+  return response.movie.recommended;
 }

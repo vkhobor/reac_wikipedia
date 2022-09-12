@@ -1,5 +1,5 @@
 import { gql } from "graphql-request";
-import { client } from "./IMBDBase";
+import { client } from "./TMBDBase";
 
 const query = gql`
   query SearchMovies($search: String!, $page: PageRange!) {
@@ -30,7 +30,7 @@ interface Data {
   searchMovies: SearchMovie[];
 }
 
-export async function imdbFilmSearch(
+export async function tmdbFilmSearch(
   search: string,
   page: number
 ): Promise<SearchMovie[]> {

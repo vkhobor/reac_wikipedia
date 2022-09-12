@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { FunctionComponent, useEffect, useState } from "react";
-import { imdbFilmSearch } from "../../api/IMDB/IMBDFilmSearch";
-import { imdbRelated } from "../../api/IMDB/IMBDRelated";
+import { tmdbFilmSearch } from "../../api/TMDB/TMDBFilmSearch";
+import { tmdbRelated } from "../../api/TMDB/TMDBRelated";
 import SearchForm from "../SearchForm";
 import useSearch from "../../hooks/useSearch";
 import DetailsWithData from "./details/DetailsWithData";
@@ -9,16 +9,22 @@ import Table from "./Table";
 
 interface TableWithDataProps {
   searchFilter: string;
+  refetchSearch: number;
 }
 
 const TableWithData: FunctionComponent<TableWithDataProps> = ({
   searchFilter,
+  refetchSearch,
 }) => {
   const [relatedSearchId, setRelatedSearchId] = useState("");
 
   useEffect(() => {
     setRelatedSearchId("");
-  }, [searchFilter]);
+  }, [searchFilter, refetchSearch]);
+
+  useEffect(() => {
+    searchQuery.refetch();
+  }, [refetchSearch]);
 
   function loadRelated(id: string) {
     setRelatedSearchId(id);
@@ -26,13 +32,13 @@ const TableWithData: FunctionComponent<TableWithDataProps> = ({
 
   const searchQuery = useQuery(
     ["table-data-search", searchFilter],
-    () => imdbFilmSearch(searchFilter, 1),
+    () => tmdbFilmSearch(searchFilter, 1),
     { initialData: [] }
   );
 
   const relatedQuery = useQuery(
     ["table-data-related", relatedSearchId],
-    () => imdbRelated(relatedSearchId),
+    () => tmdbRelated(relatedSearchId),
     {
       initialData: [],
     }
@@ -51,9 +57,8 @@ const TableWithData: FunctionComponent<TableWithDataProps> = ({
         <DetailsWithData
           movieTitle={row.name}
           visible={isExpanded}
-          IMDBid={row.id}
+          id={row.id}
           loadRelated={loadRelated}
-          IMDBUrl={row.homepage}
         />
       )}
     />

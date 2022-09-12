@@ -1,6 +1,6 @@
 import { FunctionComponent, useMemo } from "react";
 import MaterialReactTable, { MRT_ColumnDef } from "material-react-table";
-import { SearchMovie, Genre } from "../../api/IMDB/IMBDFilmSearch";
+import { SearchMovie, Genre } from "../../api/TMDB/TMDBFilmSearch";
 import RatingCell from "./RatingCell";
 import GenreCell from "./GenreCell";
 

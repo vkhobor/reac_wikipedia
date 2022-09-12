@@ -1,37 +1,35 @@
 import { useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
+import { createUrlFromTMDBId } from "../../../api/TMDB/createUrlFromTMDBId";
 import { wikiFindFilm } from "../../../api/wikipedia/wikiFindFilm";
 import Details from "./Details";
 
 interface DetailsWithDataProps {
   movieTitle: string;
   visible: boolean;
-  IMDBUrl: string;
-  IMDBid: string;
+  id: string;
   loadRelated: (id: string) => void;
 }
 
 const DetailsWithData: FunctionComponent<DetailsWithDataProps> = (props) => {
-  const { data, isError, isLoading } = useQuery(
+  const wikiQuery = useQuery(
     ["movie-details", props.visible, props.movieTitle],
     () => wikiFindFilm(props.movieTitle),
     { enabled: props.visible }
   );
 
-  const { description, title, url } = data || {};
+  const tmdb = {
+    url: createUrlFromTMDBId(props.id),
+    id: props.id,
+  };
 
-  return (
-    <Details
-      summary={description}
-      title={title}
-      isWikiLoading={isLoading}
-      isWikiError={isError}
-      wikiUrl={url}
-      IMDBId={props.IMDBid}
-      IMDBUrl={props.IMDBUrl}
-      loadRelated={props.loadRelated}
-    />
-  );
+  const wikiData = wikiQuery.data || {};
+  const wiki = {
+    ...wikiQuery,
+    ...wikiData,
+  };
+
+  return <Details tmdb={tmdb} wiki={wiki} loadRelated={props.loadRelated} />;
 };
 
 export default DetailsWithData;

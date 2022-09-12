@@ -60,7 +60,6 @@ export async function wikiGetPageDetail(pageIds: number[]) {
       inprop: "url",
       exintro: 1,
       explaintext: 1,
-      exsextionformat: "plain",
     },
   });
   return data.query.pages;

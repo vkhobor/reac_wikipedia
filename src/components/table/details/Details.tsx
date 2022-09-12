@@ -1,33 +1,37 @@
 import { Alert, Button, CircularProgress } from "@mui/material";
 import { FunctionComponent } from "react";
-import { createUrlFromIMDBId } from "../../../api/IMDB/createUrlFromIMDBId";
-
 interface DetailsProps {
-  summary?: string;
-  title?: string;
-  wikiUrl?: string;
-  isWikiLoading: boolean;
-  isWikiError: boolean;
-  IMDBUrl?: string;
-  IMDBId: string;
+  wiki: {
+    summary?: string;
+    title?: string;
+    url?: string;
+    isLoading: boolean;
+    isError: boolean;
+  };
+  tmdb: {
+    url: string;
+    id: string;
+  };
+
   loadRelated: (id: string) => void;
 }
 
 const Details: FunctionComponent<DetailsProps> = (props) => {
-  const imdbUrl = createUrlFromIMDBId(props.IMDBId);
   return (
     <>
-      {props.isWikiLoading ? (
+      {props.wiki.isLoading ? (
         <div className=" h-36 flex justify-center items-center">
           <CircularProgress />
         </div>
-      ) : props.isWikiError ? (
+      ) : props.wiki.isError ? (
         <Alert severity="error">Could not find movie on wikipedia.org</Alert>
       ) : (
         <>
           <div className="h-36 overflow-hidden">
-            <h5 className="text-xl mb-2">{props.title}</h5>
-            <p className="overflow-hidden text-ellipsis">{props.summary}</p>
+            <h5 className="text-xl mb-2">{props.wiki.title}</h5>
+            <p className="overflow-hidden text-ellipsis">
+              {props.wiki.summary}
+            </p>
           </div>
         </>
       )}
@@ -35,18 +39,18 @@ const Details: FunctionComponent<DetailsProps> = (props) => {
       <div className="flex justify-end gap-2 pt-3">
         <Button
           target="_blank"
-          disabled={props.isWikiLoading || props.isWikiError}
+          disabled={props.wiki.isLoading || props.wiki.isError}
           variant="outlined"
-          href={props.wikiUrl || ""}
+          href={props.wiki.url || ""}
         >
           Wikipedia
         </Button>
-        <Button variant="outlined" target="_blank" href={imdbUrl}>
-          IMDB
+        <Button variant="outlined" target="_blank" href={props.tmdb.url}>
+          TMDB
         </Button>
         <Button
           variant="contained"
-          onClick={() => props.loadRelated(props.IMDBId)}
+          onClick={() => props.loadRelated(props.tmdb.id)}
         >
           Related
         </Button>

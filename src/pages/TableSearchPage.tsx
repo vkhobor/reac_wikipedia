@@ -6,7 +6,8 @@ import useSearch from "../hooks/useSearch";
 interface TableSearchPageProps {}
 
 const TableSearchPage: FunctionComponent<TableSearchPageProps> = () => {
-  const { search, searchFilter, setSearchInput } = useSearch<string>("", false);
+  const { search, searchFilter, setSearchInput, refetch } =
+    useSearch<string>("");
 
   return (
     <div className="content">
@@ -14,7 +15,7 @@ const TableSearchPage: FunctionComponent<TableSearchPageProps> = () => {
         <SearchForm onInputChange={setSearchInput} onSubmit={search} />
       </div>
       <div className="rounded-md overflow-hidden shadow-material mb-3">
-        <TableWithData searchFilter={searchFilter} />
+        <TableWithData refetchSearch={refetch} searchFilter={searchFilter} />
       </div>
     </div>
   );
