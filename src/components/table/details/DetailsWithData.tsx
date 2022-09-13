@@ -28,6 +28,7 @@ const DetailsWithData: FunctionComponent<DetailsWithDataProps> = (props) => {
     isLoading,
     summary: data?.description,
     title: data?.title,
+    url: data?.url,
   }
 
   return <Details tmdb={tmdb} wiki={wiki} loadRelated={props.loadRelated} />
