@@ -1,23 +1,23 @@
-import { FunctionComponent, useMemo } from "react";
-import MaterialReactTable, { MRT_ColumnDef } from "material-react-table";
-import { SearchMovie, Genre } from "../../api/TMDB/TMDBFilmSearch";
-import RatingCell from "./RatingCell";
-import GenreCell from "./GenreCell";
+import { FunctionComponent, useMemo } from "react"
+import MaterialReactTable, { MRT_ColumnDef } from "material-react-table"
+import { SearchMovie, Genre } from "../../api/TMDB/TMDBFilmSearch"
+import RatingCell from "./RatingCell"
+import GenreCell from "./GenreCell"
 
 interface Movie {
-  id: string;
-  name: string;
-  score: number;
-  homepage: string;
-  genres: { name: string }[];
+  id: string
+  name: string
+  score: number
+  homepage: string
+  genres: Array<{ name: string }>
 }
 
 interface TableProps {
-  data: Movie[];
-  isError: boolean;
-  isLoading: boolean;
-  isFetching: boolean;
-  renderDetailPanel: (row: SearchMovie, isExpanded: boolean) => React.ReactNode;
+  data: Movie[]
+  isError: boolean
+  isLoading: boolean
+  isFetching: boolean
+  renderDetailPanel: (row: SearchMovie, isExpanded: boolean) => React.ReactNode
 }
 
 const Table: FunctionComponent<TableProps> = ({
@@ -27,7 +27,7 @@ const Table: FunctionComponent<TableProps> = ({
   isFetching,
   renderDetailPanel,
 }) => {
-  const columns = useMemo<MRT_ColumnDef<SearchMovie>[]>(
+  const columns = useMemo<Array<MRT_ColumnDef<SearchMovie>>>(
     () => [
       {
         accessorKey: "name",
@@ -36,22 +36,22 @@ const Table: FunctionComponent<TableProps> = ({
       {
         accessorKey: "score",
         header: "Score",
-        Cell: ({ cell }) => (
-          <RatingCell ratingOfTen={cell.getValue<number>()} />
+        Cell: (context) => (
+          <RatingCell ratingOfTen={context.cell.getValue<number>()} />
         ),
       },
       {
         accessorKey: "genres",
         header: "Genres",
-        Cell: ({ cell }) => (
+        Cell: (context) => (
           <GenreCell
-            genres={cell.getValue<Genre[]>().map((genre) => genre.name)}
+            genres={context.cell.getValue<Genre[]>().map((genre) => genre.name)}
           />
         ),
       },
     ],
     []
-  );
+  )
 
   return (
     <>
@@ -87,7 +87,7 @@ const Table: FunctionComponent<TableProps> = ({
         }}
       />
     </>
-  );
-};
+  )
+}
 
-export default Table;
+export default Table

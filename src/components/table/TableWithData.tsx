@@ -1,49 +1,49 @@
-import { useQuery } from "@tanstack/react-query";
-import { FunctionComponent, useEffect, useState } from "react";
-import { tmdbFilmSearch } from "../../api/TMDB/TMDBFilmSearch";
-import { tmdbRelated } from "../../api/TMDB/TMDBRelated";
-import DetailsWithData from "./details/DetailsWithData";
-import Table from "./Table";
+import { useQuery } from "@tanstack/react-query"
+import { FunctionComponent, useEffect, useState } from "react"
+import { tmdbFilmSearch } from "../../api/TMDB/TMDBFilmSearch"
+import { tmdbRelated } from "../../api/TMDB/TMDBRelated"
+import DetailsWithData from "./details/DetailsWithData"
+import Table from "./Table"
 
 interface TableWithDataProps {
-  searchFilter: string;
-  refetchSearch: number;
+  searchFilter: string
+  refetchSearch: number
 }
 
 const TableWithData: FunctionComponent<TableWithDataProps> = ({
   searchFilter,
   refetchSearch,
 }) => {
-  const [relatedSearchId, setRelatedSearchId] = useState("");
+  const [relatedSearchId, setRelatedSearchId] = useState("")
 
   useEffect(() => {
-    setRelatedSearchId("");
-  }, [searchFilter, refetchSearch]);
+    setRelatedSearchId("")
+  }, [searchFilter, refetchSearch])
 
   useEffect(() => {
-    searchQuery.refetch();
-  }, [refetchSearch]);
+    searchQuery.refetch().catch(console.error)
+  }, [refetchSearch])
 
   function loadRelated(id: string) {
-    setRelatedSearchId(id);
+    setRelatedSearchId(id)
   }
 
   const searchQuery = useQuery(
     ["table-data-search", searchFilter],
-    () => tmdbFilmSearch(searchFilter, 1),
+    async () => await tmdbFilmSearch(searchFilter, 1),
     { initialData: [] }
-  );
+  )
 
   const relatedQuery = useQuery(
     ["table-data-related", relatedSearchId],
-    () => tmdbRelated(relatedSearchId),
+    async () => await tmdbRelated(relatedSearchId),
     {
       initialData: [],
     }
-  );
+  )
 
   const { data, isError, isFetching, isLoading } =
-    relatedSearchId === "" ? searchQuery : relatedQuery;
+    relatedSearchId === "" ? searchQuery : relatedQuery
 
   return (
     <Table
@@ -60,7 +60,7 @@ const TableWithData: FunctionComponent<TableWithDataProps> = ({
         />
       )}
     />
-  );
-};
+  )
+}
 
-export default TableWithData;
+export default TableWithData

@@ -1,19 +1,19 @@
-import { Alert, Button, CircularProgress } from "@mui/material";
-import { FunctionComponent } from "react";
+import { Alert, Button, CircularProgress } from "@mui/material"
+import { FunctionComponent } from "react"
 interface DetailsProps {
   wiki: {
-    summary?: string;
-    title?: string;
-    url?: string;
-    isLoading: boolean;
-    isError: boolean;
-  };
+    summary?: string
+    title?: string
+    url?: string
+    isLoading: boolean
+    isError: boolean
+  }
   tmdb: {
-    url: string;
-    id: string;
-  };
+    url: string
+    id: string
+  }
 
-  loadRelated: (id: string) => void;
+  loadRelated: (id: string) => void
 }
 
 const Details: FunctionComponent<DetailsProps> = (props) => {
@@ -41,7 +41,7 @@ const Details: FunctionComponent<DetailsProps> = (props) => {
           target="_blank"
           disabled={props.wiki.isLoading || props.wiki.isError}
           variant="outlined"
-          href={props.wiki.url || ""}
+          href={props.wiki.url ?? ""}
         >
           Wikipedia
         </Button>
@@ -56,7 +56,7 @@ const Details: FunctionComponent<DetailsProps> = (props) => {
         </Button>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Details;
+export default Details

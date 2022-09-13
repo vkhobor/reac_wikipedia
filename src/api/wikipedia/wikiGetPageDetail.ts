@@ -42,7 +42,7 @@ export interface Response {
   query: Query;
 }
 
-//Example query: api.php?action=query&format=json&prop=templates%7Cinfo%7Cextracts&pageids=5%7C4335%7C47200019&tltemplates=Template%3AInfobox%20film&inprop=url&exintro=1&explaintext=1&exsectionformat=plain
+// Example query: api.php?action=query&format=json&prop=templates%7Cinfo%7Cextracts&pageids=5%7C4335%7C47200019&tltemplates=Template%3AInfobox%20film&inprop=url&exintro=1&explaintext=1&exsectionformat=plain
 
 /**
  * wikiGetPageDetail gets detail data for pageIds

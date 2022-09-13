@@ -1,13 +1,11 @@
-import { FunctionComponent } from "react";
-import SearchForm from "../components/SearchForm";
-import TableWithData from "../components/table/TableWithData";
-import useSearch from "../hooks/useSearch";
+import { FunctionComponent } from "react"
+import SearchForm from "../components/SearchForm"
+import TableWithData from "../components/table/TableWithData"
+import useSearch from "../hooks/useSearch"
 
-interface TableSearchPageProps {}
-
-const TableSearchPage: FunctionComponent<TableSearchPageProps> = () => {
+const TableSearchPage: FunctionComponent<EmptyInterface> = () => {
   const { search, searchFilter, setSearchInput, refetch } =
-    useSearch<string>("");
+    useSearch<string>("")
 
   return (
     <div className="content">
@@ -18,7 +16,7 @@ const TableSearchPage: FunctionComponent<TableSearchPageProps> = () => {
         <TableWithData refetchSearch={refetch} searchFilter={searchFilter} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TableSearchPage;
+export default TableSearchPage

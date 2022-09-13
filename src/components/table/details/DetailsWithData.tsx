@@ -3,7 +3,6 @@ import { FunctionComponent } from "react"
 import { createUrlFromTMDBId } from "../../../api/TMDB/createUrlFromTMDBId"
 import { wikiFindFilm } from "../../../api/wikipedia/wikiFindFilm"
 import Details from "./Details"
-import CatIcon from "~icons/mdi/cat"
 
 interface DetailsWithDataProps {
   movieTitle: string
@@ -15,7 +14,7 @@ interface DetailsWithDataProps {
 const DetailsWithData: FunctionComponent<DetailsWithDataProps> = (props) => {
   const { isError, isLoading, data } = useQuery(
     ["movie-details", props.visible, props.movieTitle],
-    () => wikiFindFilm(props.movieTitle),
+    async () => await wikiFindFilm(props.movieTitle),
     { enabled: props.visible }
   )
 
