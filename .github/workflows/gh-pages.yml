@@ -25,7 +25,7 @@ jobs:
         with:
           files: '["**/*.ts"]'
         env:
-          COMMIT_HASH: ${{ steps.vars.outputs.sha_short }}"
+          COMMIT_HASH: ${{ steps.vars.outputs.sha_short }}
 
       - name: Setup Node
         uses: actions/setup-node@v3
