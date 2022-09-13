@@ -6,7 +6,7 @@ const Header: FunctionComponent<EmptyInterface> = () => {
   return (
     <header className="sticky top-0 z-10 bg-materialBlue shadow-material h-14 p-3 flex justify-between items-center flex-row">
       <div className="text-sm">
-        {tokens.commitHash === "#{COMMIT_HASH}#" && (
+        {tokens.commitHash !== "#{COMMIT_HASH}#" && (
           <>
             <div className="flex flex-col">
               <span className="opacity-70 font-bold">commit</span>
