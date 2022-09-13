@@ -2,8 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { FunctionComponent, useEffect, useState } from "react";
 import { tmdbFilmSearch } from "../../api/TMDB/TMDBFilmSearch";
 import { tmdbRelated } from "../../api/TMDB/TMDBRelated";
-import SearchForm from "../SearchForm";
-import useSearch from "../../hooks/useSearch";
 import DetailsWithData from "./details/DetailsWithData";
 import Table from "./Table";
 
