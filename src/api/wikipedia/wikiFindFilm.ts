@@ -29,7 +29,7 @@ export async function wikiFindFilm(
   const firstPage = pages[0]
 
   return {
-    description: firstPage.extract,
+    descriptionHtml: firstPage.extract,
     url: firstPage.fullurl,
     title: firstPage.title,
   }
