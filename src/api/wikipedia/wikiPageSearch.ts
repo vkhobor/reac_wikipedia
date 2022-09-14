@@ -3,38 +3,38 @@ import {
   formatJSONParam,
   queryParam,
   wikiAxios,
-} from "./wikiBase";
+} from "./wikiBase"
 
 export interface Continue {
-  sroffset: number;
-  continue: string;
+  sroffset: number
+  continue: string
 }
 
 export interface Searchinfo {
-  totalhits: number;
-  suggestion: string;
-  suggestionsnippet: string;
+  totalhits: number
+  suggestion: string
+  suggestionsnippet: string
 }
 
 export interface Search {
-  ns: number;
-  title: string;
-  pageid: number;
-  size: number;
-  wordcount: number;
-  snippet: string;
-  timestamp: Date;
+  ns: number
+  title: string
+  pageid: number
+  size: number
+  wordcount: number
+  snippet: string
+  timestamp: Date
 }
 
 export interface Query {
-  searchinfo: Searchinfo;
-  search: Search[];
+  searchinfo: Searchinfo
+  search: Search[]
 }
 
 export interface Response {
-  batchcomplete: string;
-  continue: Continue;
-  query: Query;
+  batchcomplete: string
+  continue: Continue
+  query: Query
 }
 
 // Example query: api.php?action=query&format=json&prop=&list=search&srsearch=Batman%20Begins
@@ -55,5 +55,5 @@ export async function wikiPageSearch(search: string) {
         srsearch: search,
       },
     })
-  ).data.query.search;
+  ).data.query.search
 }

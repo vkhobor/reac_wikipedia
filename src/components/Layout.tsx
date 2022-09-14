@@ -1,8 +1,8 @@
-import { FunctionComponent } from "react";
-import Header from "./Header";
+import { FunctionComponent } from "react"
+import Header from "./Header"
 
 interface LayoutProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const Layout: FunctionComponent<LayoutProps> = (props) => {
@@ -12,7 +12,7 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
       {/* Body */}
       {props.children}
     </>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout

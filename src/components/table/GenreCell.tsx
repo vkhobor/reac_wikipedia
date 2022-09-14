@@ -1,8 +1,8 @@
-import { Chip } from "@mui/material";
-import { FunctionComponent } from "react";
+import { Chip } from "@mui/material"
+import { FunctionComponent } from "react"
 
 interface GenreCellProps {
-  genres: string[];
+  genres: string[]
 }
 
 const GenreCell: FunctionComponent<GenreCellProps> = ({ genres }) => {
@@ -12,7 +12,7 @@ const GenreCell: FunctionComponent<GenreCellProps> = ({ genres }) => {
         <Chip key={genre} label={genre} variant="filled" />
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default GenreCell;
+export default GenreCell

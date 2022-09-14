@@ -1,8 +1,8 @@
-import { Rating } from "@mui/material";
-import { FunctionComponent } from "react";
+import { Rating } from "@mui/material"
+import { FunctionComponent } from "react"
 
 interface RatingCellProps {
-  ratingOfTen: number;
+  ratingOfTen: number
 }
 
 const RatingCell: FunctionComponent<RatingCellProps> = ({ ratingOfTen }) => {
@@ -14,7 +14,7 @@ const RatingCell: FunctionComponent<RatingCellProps> = ({ ratingOfTen }) => {
       precision={0.5}
       value={ratingOfTen}
     />
-  );
-};
+  )
+}
 
-export default RatingCell;
+export default RatingCell

@@ -1,5 +1,5 @@
-import { gql } from "graphql-request";
-import { client } from "./TMBDBase";
+import { gql } from "graphql-request"
+import { client } from "./TMBDBase"
 
 const query = gql`
   query SearchMovies($search: String!, $page: PageRange!) {
@@ -12,36 +12,36 @@ const query = gql`
       }
     }
   }
-`;
+`
 
 export interface Genre {
-  name: string;
+  name: string
 }
 
 export interface SearchMovie {
-  id: string;
-  homepage: string;
-  name: string;
-  score: number;
-  genres: Genre[];
+  id: string
+  homepage: string
+  name: string
+  score: number
+  genres: Genre[]
 }
 
 interface Data {
-  searchMovies: SearchMovie[];
+  searchMovies: SearchMovie[]
 }
 
 export async function tmdbFilmSearch(
   search: string,
   page: number
 ): Promise<SearchMovie[]> {
-  if (search === "") return [];
+  if (search === "") return []
 
   const variables = {
     search,
     page,
-  };
+  }
 
-  const response = await client.request<Data>(query, variables);
+  const response = await client.request<Data>(query, variables)
 
-  return response.searchMovies;
+  return response.searchMovies
 }
