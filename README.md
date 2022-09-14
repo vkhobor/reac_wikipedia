@@ -1,4 +1,3 @@
-
 # TMDB, Wikipedia Client
 
 SPA app to query movies from TMDB, and get the corresponting Wikipedia page.
@@ -9,8 +8,9 @@ SPA app to query movies from TMDB, and get the corresponting Wikipedia page.
 
 Demo to try out is deployed on [Cloudflare](https://reac-wikipedia.pages.dev/)
 
-
 ## Run Locally
+
+> **_WARNING:_** The project is locked on nodejs verison: 16.17.0
 
 Clone the project
 
@@ -36,10 +36,8 @@ Start the server
   npm run dev
 ```
 
-
 ## Tech Stack
 
 **Client:** React, Vite, TailwindCSS, React-Query, Typescript
 
 **API:** TMDB api, Wikipedia API
-
