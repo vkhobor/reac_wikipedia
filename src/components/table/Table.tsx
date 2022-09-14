@@ -68,7 +68,7 @@ const Table: FunctionComponent<TableProps> = ({
         enableGlobalFilter={false}
         enableFullScreenToggle={false}
         muiTableBodyRowProps={{ hover: false }}
-        renderToolbarInternalActions={({ table }) => <></>}
+        renderToolbarInternalActions={(_) => <></>}
         renderDetailPanel={({ row }) =>
           renderDetailPanel(row.original, row.getIsExpanded())
         }

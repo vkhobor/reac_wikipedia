@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { FunctionComponent, useEffect, useState } from "react"
+import { FunctionComponent } from "react"
 import { tmdbFilmSearch } from "../../api/TMDB/TMDBFilmSearch"
 import { tmdbRelated } from "../../api/TMDB/TMDBRelated"
 import DetailsWithData from "./details/DetailsWithData"
@@ -7,27 +7,15 @@ import Table from "./Table"
 
 interface TableWithDataProps {
   searchFilter: string
-  refetchSearch: number
+  relatedSearchId: string
+  loadRelated: (id: string) => void
 }
 
 const TableWithData: FunctionComponent<TableWithDataProps> = ({
   searchFilter,
-  refetchSearch,
+  relatedSearchId,
+  loadRelated,
 }) => {
-  const [relatedSearchId, setRelatedSearchId] = useState("")
-
-  useEffect(() => {
-    setRelatedSearchId("")
-  }, [searchFilter, refetchSearch])
-
-  useEffect(() => {
-    searchQuery.refetch().catch(console.error)
-  }, [refetchSearch])
-
-  function loadRelated(id: string) {
-    setRelatedSearchId(id)
-  }
-
   const searchQuery = useQuery(
     ["table-data-search", searchFilter],
     async () => await tmdbFilmSearch(searchFilter, 1),

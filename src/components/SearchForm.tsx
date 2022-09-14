@@ -1,19 +1,21 @@
-import { Button, TextField } from "@mui/material";
-import { FunctionComponent, KeyboardEvent } from "react";
-import SendIcon from "~icons/mdi/send";
+import { Button, TextField } from "@mui/material"
+import { FunctionComponent, KeyboardEvent } from "react"
+import SendIcon from "~icons/mdi/send"
 
 interface SearchFormProps {
-  onInputChange: (val: string) => void;
-  onSubmit: () => void;
+  onInputChange: (val: string) => void
+  onSubmit: () => void
+  input: string
 }
 
 const SearchForm: FunctionComponent<SearchFormProps> = ({
   onInputChange,
   onSubmit,
+  input,
 }) => {
   function handleKeyDown(e: KeyboardEvent): void {
     if (e.key === "Enter") {
-      onSubmit();
+      onSubmit()
     }
   }
 
@@ -25,12 +27,13 @@ const SearchForm: FunctionComponent<SearchFormProps> = ({
         className="h-16 w-72"
         onChange={(evt) => onInputChange(evt.target.value)}
         onKeyDown={handleKeyDown}
+        value={input}
       />
       <Button className="h-14 " variant="contained" onClick={onSubmit}>
         <SendIcon className="h-7 w-auto" />
       </Button>
     </>
-  );
-};
+  )
+}
 
-export default SearchForm;
+export default SearchForm
