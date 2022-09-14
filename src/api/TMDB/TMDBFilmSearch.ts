@@ -1,5 +1,5 @@
 import { gql } from "graphql-request"
-import { client } from "./TMBDBase"
+import { client } from "./config"
 
 const query = gql`
   query SearchMovies($search: String!, $page: PageRange!) {
@@ -7,6 +7,7 @@ const query = gql`
       id
       name
       score
+      releaseDate
       genres {
         name
       }
@@ -22,6 +23,7 @@ export interface SearchMovie {
   id: string
   homepage: string
   name: string
+  releaseDate: Date
   score: number
   genres: Genre[]
 }
@@ -43,5 +45,8 @@ export async function tmdbFilmSearch(
 
   const response = await client.request<Data>(query, variables)
 
-  return response.searchMovies
+  return response.searchMovies.map((movie) => ({
+    ...movie,
+    releaseDate: new Date(movie.releaseDate),
+  }))
 }

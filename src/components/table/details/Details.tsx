@@ -1,8 +1,10 @@
 import { Alert, Button, CircularProgress } from "@mui/material"
 import { FunctionComponent } from "react"
+import { getFirstParagraph } from "./getFirstParagraph"
+
 interface DetailsProps {
   wiki: {
-    summary?: string
+    summaryHtml?: string
     title?: string
     url?: string
     isLoading: boolean
@@ -12,7 +14,6 @@ interface DetailsProps {
     url: string
     id: string
   }
-
   loadRelated: (id: string) => void
 }
 
@@ -21,6 +22,7 @@ const Details: FunctionComponent<DetailsProps> = ({
   tmdb,
   loadRelated,
 }) => {
+  const summaryFirstParagraph = getFirstParagraph(wiki.summaryHtml ?? "")
   return (
     <>
       {wiki.isLoading ? (
@@ -32,7 +34,7 @@ const Details: FunctionComponent<DetailsProps> = ({
       ) : (
         <>
           <h5 className="text-xl mb-2">{wiki.title}</h5>
-          <p>{wiki.summary}</p>
+          <p>{summaryFirstParagraph}</p>
         </>
       )}
 

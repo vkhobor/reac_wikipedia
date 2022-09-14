@@ -8,6 +8,7 @@ interface Movie {
   id: string
   name: string
   score: number
+  releaseDate: Date
   homepage: string
   genres: Array<{ name: string }>
 }

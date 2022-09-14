@@ -1,9 +1,9 @@
+import { wikiAxios } from "./config"
 import {
-  crossOriginRequest,
-  formatJSONParam,
-  queryParam,
-  wikiAxios,
-} from "./wikiBase"
+  crossOriginRequest as crossOrigin,
+  formatJSONParam as formatJSON,
+  queryParam as query,
+} from "./utils"
 
 export interface Continue {
   sroffset: number
@@ -39,20 +39,16 @@ export interface Response {
 
 // Example query: api.php?action=query&format=json&prop=&list=search&srsearch=Batman%20Begins
 
-/**
- * wikiPageSearch uses search api to find pages
- * related to search parameter
- * @param  {string} search
- */
-export async function wikiPageSearch(search: string) {
+export async function wikiSearch(...keywords: string[]) {
   return (
     await wikiAxios.get<Response>("", {
       params: {
-        ...queryParam,
-        ...formatJSONParam,
-        ...crossOriginRequest,
+        ...query,
+        ...formatJSON,
+        ...crossOrigin,
         list: "search",
-        srsearch: search,
+        srsearch: keywords.join(" "),
+        srlimit: 10,
       },
     })
   ).data.query.search

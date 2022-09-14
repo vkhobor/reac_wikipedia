@@ -6,32 +6,39 @@ import Details from "./Details"
 
 interface DetailsWithDataProps {
   movieTitle: string
+  movieYear: number
   visible: boolean
   id: string
   loadRelated: (id: string) => void
 }
 
-const DetailsWithData: FunctionComponent<DetailsWithDataProps> = (props) => {
+const DetailsWithData: FunctionComponent<DetailsWithDataProps> = ({
+  movieTitle,
+  movieYear,
+  visible,
+  id,
+  loadRelated,
+}) => {
   const { isError, isLoading, data } = useQuery(
-    ["movie-details", props.visible, props.movieTitle],
-    async () => await wikiFindFilm(props.movieTitle),
-    { enabled: props.visible }
+    ["movie-details", visible, movieTitle, movieYear],
+    async () => await wikiFindFilm(movieTitle, String(movieYear)),
+    { enabled: visible, retry: 1 }
   )
 
   const tmdb = {
-    url: createUrlFromTMDBId(props.id),
-    id: props.id,
+    url: createUrlFromTMDBId(id),
+    id,
   }
 
   const wiki = {
     isError,
     isLoading,
-    summary: data?.description,
+    summaryHtml: data?.descriptionHtml,
     title: data?.title,
     url: data?.url,
   }
 
-  return <Details tmdb={tmdb} wiki={wiki} loadRelated={props.loadRelated} />
+  return <Details tmdb={tmdb} wiki={wiki} loadRelated={loadRelated} />
 }
 
 export default DetailsWithData

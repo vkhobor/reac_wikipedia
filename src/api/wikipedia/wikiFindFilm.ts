@@ -1,44 +1,89 @@
-import { wikiGetPageDetail } from "./wikiGetPageDetail"
-import { wikiPageSearch } from "./wikiPageSearch"
+import { wikiGetPageDetailsByIds } from "./wikiGetPageDetailsByIds"
+import { wikiSearch } from "./wikiSearch"
+import { templateInfoBoxFilm, WikipediaError } from "./utils"
 
 interface Film {
   url: string
-  description: string
+  descriptionHtml: string
   title: string
 }
 /**
- * wikiFindFilm attempts to get wikipedia page for film by title
- * internally it checks if page inlcudes the common infobox template
- * @param  {string} title - title of the film
- * @returns Film details
+ * wikiFindFilm tries to find movie wikipedia page
+ * by movie title and optional extraKeywords
+ * @param  {string} title title of the movie
+ * @param  {string[]} ...extraKeywords keywords like year to specify more
+ * @returns Promise<Film>
  */
-export async function wikiFindFilm(title: string): Promise<Film> {
-  const pages = await wikiPageSearch(title)
+export async function wikiFindFilm(
+  title: string,
+  ...extraKeywords: string[]
+): Promise<Film> {
+  let pages = await wikiFindPagesWithSearch(title, ...extraKeywords)
+
+  pages = filterPages(pages, title)
+
+  if (pages.length === 0) {
+    throw new WikipediaError("Not found")
+  }
+
+  const firstPage = pages[0]
+
+  return {
+    description: firstPage.extract,
+    url: firstPage.fullurl,
+    title: firstPage.title,
+  }
+}
+
+/**
+ * wikiFindPagesWithSearch searches on wikipedia, and expands
+ * result set with details query
+ * @param  {string[]} ...keywords
+ */
+async function wikiFindPagesWithSearch(...keywords: string[]) {
+  let pages = await wikiSearch(...keywords)
   const pageIds = pages.map((page) => page.pageid)
 
-  const pagesWithDetails = await wikiGetPageDetail(pageIds)
+  const pagesWithDetailsMap = await wikiGetPageDetailsByIds(pageIds)
 
-  const filteredPagesByInfoBox = pages.filter((page) => {
-    let { templates } = pagesWithDetails[page.pageid]
-    templates = templates ?? []
-    return templates.some(
-      (template) => template.title === "Template:Infobox film"
+  pages = pages.filter((page) => page.pageid in pagesWithDetailsMap)
+
+  return pages.map((page) => {
+    const details = pagesWithDetailsMap[page.pageid]
+    return {
+      ...details,
+      // if extract is omitted(sometimes) in response use search query snippet as fallback
+      extract: details.extract ?? `${page.snippet}...`,
+    }
+  })
+}
+
+interface Page {
+  missing?: string
+  pageid: number
+  title: string
+  templates?: Array<{ ns: number; title: string }>
+  extract: string
+  fullurl: string
+}
+
+function filterPages<P extends Page>(pages: P[], title: string) {
+  // Exclude missing
+  let pagesResult = pages.filter((page) => page.missing === undefined)
+
+  // Filter by infobox Film
+  pagesResult = pagesResult.filter((page) => {
+    const { templates } = page
+    const templatesOrDefault = templates ?? []
+    return templatesOrDefault.some(
+      (template) => template.title === templateInfoBoxFilm
     )
   })
 
-  if (filteredPagesByInfoBox.length === 0) {
-    throw Error("Could not find film on wikipedia.")
-  }
+  // Filter by title
+  pagesResult = pagesResult.filter((page) =>
+    page.title.toLowerCase().includes(title.toLowerCase())
+  )
 
-  const {
-    fullurl,
-    extract,
-    title: foundTitle,
-  } = pagesWithDetails[filteredPagesByInfoBox[0].pageid]
-
-  return {
-    description: extract,
-    url: fullurl,
-    title: foundTitle,
-  }
+  return pagesResult
 }

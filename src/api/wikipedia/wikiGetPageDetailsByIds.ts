@@ -1,10 +1,11 @@
+import { wikiAxios } from "./config"
 import {
   arrayFormat,
   crossOriginRequest,
   formatJSONParam,
   queryParam,
-  wikiAxios,
-} from "./wikiBase"
+  templateInfoBoxFilm,
+} from "./utils"
 
 export interface Template {
   ns: number
@@ -12,6 +13,7 @@ export interface Template {
 }
 
 export interface Page {
+  missing?: string
   pageid: number
   ns: number
   title: string
@@ -48,7 +50,7 @@ export interface Response {
  * wikiGetPageDetail gets detail data for pageIds
  * @param  {number[]} pageIds
  */
-export async function wikiGetPageDetail(pageIds: number[]) {
+export async function wikiGetPageDetailsByIds(pageIds: number[]) {
   const { data } = await wikiAxios.get<Response>("", {
     params: {
       ...queryParam,
@@ -56,10 +58,9 @@ export async function wikiGetPageDetail(pageIds: number[]) {
       ...crossOriginRequest,
       prop: "templates|info|extracts",
       pageids: arrayFormat(pageIds),
-      tltemplates: "Template:Infobox film",
+      tltemplates: templateInfoBoxFilm,
       inprop: "url",
       exintro: 1,
-      explaintext: 1,
     },
   })
   return data.query.pages
