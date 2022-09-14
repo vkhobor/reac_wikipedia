@@ -16,42 +16,39 @@ interface DetailsProps {
   loadRelated: (id: string) => void
 }
 
-const Details: FunctionComponent<DetailsProps> = (props) => {
+const Details: FunctionComponent<DetailsProps> = ({
+  wiki,
+  tmdb,
+  loadRelated,
+}) => {
   return (
     <>
-      {props.wiki.isLoading ? (
+      {wiki.isLoading ? (
         <div className=" h-36 flex justify-center items-center">
           <CircularProgress />
         </div>
-      ) : props.wiki.isError ? (
+      ) : wiki.isError ? (
         <Alert severity="error">Could not find movie on wikipedia.org</Alert>
       ) : (
         <>
-          <div className="h-36 overflow-hidden">
-            <h5 className="text-xl mb-2">{props.wiki.title}</h5>
-            <p className="overflow-hidden text-ellipsis">
-              {props.wiki.summary}
-            </p>
-          </div>
+          <h5 className="text-xl mb-2">{wiki.title}</h5>
+          <p>{wiki.summary}</p>
         </>
       )}
 
       <div className="flex justify-end gap-2 pt-3">
         <Button
           target="_blank"
-          disabled={props.wiki.isLoading || props.wiki.isError}
+          disabled={wiki.isLoading || wiki.isError}
           variant="outlined"
-          href={props.wiki.url ?? ""}
+          href={wiki.url ?? ""}
         >
           Wikipedia
         </Button>
-        <Button variant="outlined" target="_blank" href={props.tmdb.url}>
+        <Button variant="outlined" target="_blank" href={tmdb.url}>
           TMDB
         </Button>
-        <Button
-          variant="contained"
-          onClick={() => props.loadRelated(props.tmdb.id)}
-        >
+        <Button variant="contained" onClick={() => loadRelated(tmdb.id)}>
           Related
         </Button>
       </div>
