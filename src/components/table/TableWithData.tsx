@@ -42,7 +42,7 @@ const TableWithData: FunctionComponent<TableWithDataProps> = ({
       renderDetailPanel={(row, isExpanded) => (
         <DetailsWithData
           movieTitle={row.name}
-          movieYear={row.releaseDate.getFullYear()}
+          movieYear={row.releaseDate?.getFullYear()}
           visible={isExpanded}
           id={row.id}
           loadRelated={loadRelated}
