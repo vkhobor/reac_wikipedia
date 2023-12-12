@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { FunctionComponent } from "react"
-import { tmdbFilmSearch } from "../../api/TMDB/TMDBFilmSearch"
-import { tmdbRelated } from "../../api/TMDB/TMDBRelated"
+import { tmdbFilmSearch } from "../../services/TMDB/TMDBFilmSearch"
+import { tmdbRelated } from "../../services/TMDB/TMDBRelated"
 import DetailsWithData from "./details/DetailsWithData"
 import Table from "./Table"
 
@@ -24,7 +24,7 @@ const TableWithData: FunctionComponent<TableWithDataProps> = ({
 
   const relatedQuery = useQuery(
     ["table-data-related", relatedSearchId],
-    async () => await tmdbRelated(relatedSearchId),
+    async () => await tmdbRelated(relatedSearchId, 1),
     {
       initialData: [],
     }

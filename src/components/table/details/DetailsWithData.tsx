@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { FunctionComponent } from "react"
-import { createUrlFromTMDBId } from "../../../api/TMDB/createUrlFromTMDBId"
-import { wikiFindFilm } from "../../../api/wikipedia/wikiFindFilm"
+import { createUrlFromTMDBId } from "../../../services/TMDB/createUrlFromTMDBId"
+import { wikiFindFilm } from "../../../services/wikipedia/wikiFindFilm"
 import Details from "./Details"
 
 interface DetailsWithDataProps {

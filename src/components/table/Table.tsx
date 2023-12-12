@@ -1,20 +1,11 @@
 import { FunctionComponent, useMemo } from "react"
 import MaterialReactTable, { MRT_ColumnDef } from "material-react-table"
-import { SearchMovie, Genre } from "../../api/TMDB/TMDBFilmSearch"
+import { SearchMovie, Genre } from "../../services/TMDB/TMDBFilmSearch"
 import RatingCell from "./RatingCell"
 import GenreCell from "./GenreCell"
 
-interface Movie {
-  id: string
-  name: string
-  score: number
-  releaseDate: Date
-  homepage: string
-  genres: Array<{ name: string }>
-}
-
 interface TableProps {
-  data: Movie[]
+  data: SearchMovie[]
   isError: boolean
   isLoading: boolean
   isFetching: boolean
@@ -84,7 +75,7 @@ const Table: FunctionComponent<TableProps> = ({
         state={{
           isLoading,
           showAlertBanner: isError,
-          showProgressBars: isFetching,
+          showSkeletons: isFetching,
         }}
       />
     </>
