@@ -32,7 +32,7 @@ const DetailsWithData: FunctionComponent<DetailsWithDataProps> = ({
 
   const wiki = {
     isError,
-    isLoading,
+    isLoading: visible && isLoading,
     summaryHtml: data?.descriptionHtml,
     title: data?.title,
     url: data?.url,
